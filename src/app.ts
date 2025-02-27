@@ -1,18 +1,19 @@
 import express, { Request, Response } from 'express'
-import LighthouseService from '../modules/LighthouseService.ts'
+import LighthouseService from './modules/LighthouseService.js'
 import MongoDB from '../modules/mongodb.js'
 import { GridFSBucket } from 'mongodb'
 
+const app = express();
 const mongoUrl = 'mongodb://localhost:27017'
 const dbName = 'webaudit'
 const collectionName = 'performance'
 
 
-const mongoDB = new MongoDB(mongoUrl, dbName)
+const mongoDB: MongoDB = new MongoDB(mongoUrl, dbName)
 app.post('/', async (req: Request, res: Response) => {
-  //explain this code 
-  const lighthouseService: {} = new LighthouseService({})
-  const app = express()
+  //how does this code works
+  //
+  const lighthouseService: LighthouseService = new LighthouseService({})
   app.use(express.json())
   const { url }: { url: string } = req.body
   console.log(url)
