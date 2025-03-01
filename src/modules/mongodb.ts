@@ -1,7 +1,5 @@
 import { MongoClient, Db } from 'mongodb'
-import { MongoDBClient } from '../../types/interfaces'
-import { MongoDBConfig } from '../../types/interfaces'
-
+import { MongoDBClient, MongoDBConfig } from '../types/interfaces.ts'
 
 
 
@@ -25,10 +23,10 @@ class MongoDB implements MongoDBClient {
     this.client = new MongoClient(this.config.mongoUrl)
     await this.client.connect()
     this.db = this.client.db(this.dbName)
-    console.log('connected')
+    // console.log('connected')
   }
 
-  async createTimeseriesCollection(collectionName: string) {
+  async createTimeseriesCollection(collectionName: string): Promise<void> {
 
     await this.db.createCollection(collectionName, {
       timeseries: {
@@ -38,12 +36,12 @@ class MongoDB implements MongoDBClient {
       }
     })
   }
-  async insertDocument(collectionName: string, document: any) {
+  async insertDocument(collectionName: string, document: any): Promise<void> {
     const collection = this.db.collection(collectionName)
     await collection.insertOne(document)
   }
 
-  async close() {
+  async close(): Promise<void> {
     await this.client.close()
   }
 }
