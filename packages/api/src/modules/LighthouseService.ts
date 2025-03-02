@@ -22,7 +22,7 @@ class ChromeLauncherService {
     try {
       await chromeLauncher.launch({
         chromeFlags: ['--headless', '--no-sandbox'],
-        chromePath: '/home/a/a/new/api/chrome/linux-132.0.6834.159/chrome-linux64/chrome',
+        chromePath: '/home/a/a/new/packages/api/chrome/linux-132.0.6834.159/chrome-linux64/chrome',
       })
     }
     catch (error) { console.log(error) }
