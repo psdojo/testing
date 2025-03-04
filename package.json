@@ -1,14 +1,16 @@
 {
   "name": "testing",
   "private": true,
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "start:api": "npm --workspace=api start",
-    "start:frontend":"npm --workspace=frontend start",
-    "start":"concurrently \"npm run start:api\" \"npm run start:frontend\""
+    "start:frontend": "npm --workspace=frontend start",
+    "start": "concurrently \"npm run start:api\" \"npm run start:frontend\""
   },
- "devDependencies": {
-    "concurrently": "^6.0.0"
+  "devDependencies": {
+    "concurrently": "^6.0.0",
+    "prettier": "3.5.3"
   }
 }
-
