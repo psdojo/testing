@@ -5,8 +5,13 @@
     "packages/*"
   ],
   "scripts": {
-    "start:api": "npm --workspace=api start",
-    "start:frontend": "npm --workspace=frontend start",
-    "start": "npm run start:api & npm run start:frontend"
+    "start:api": "npm run --workspace=api start:dev",
+    "start:staging:api": "npm --workspace=api start:staging ",
+    "start:prod:api": "npm --workspace=api start:prod",
+    "start:frontend": "npm run --workspace=frontend start",
+    "start": "npm run start:api & npm run start:frontend",
+    "build:api": "npm run --workspace=api build",
+    "build:frontend": "npm run --workspace=frontend build",
+    "build": "npm run build:api & npm run build:frontend"
   }
 }
