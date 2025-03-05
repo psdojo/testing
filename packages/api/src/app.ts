@@ -1,4 +1,6 @@
+const port = process.env.PORT || 3000;
 import fs from "fs";
+
 import path from "path";
 import { fileURLToPath } from "url";
 import express, { Request, Response } from "express";
@@ -121,6 +123,6 @@ app.post("/", async (req: Request, res: Response) => {
   // res.status(200).json({ message: 'audit completed successfully' })
   // res.status(200).json(document)
 });
-app.listen(3000, () => {
+app.listen(, () => {
   console.log("server is running");
 });
