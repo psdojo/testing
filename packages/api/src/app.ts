@@ -28,7 +28,7 @@ const lighthouseService = new LighthouseService({});
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://testing-frontend-iota.vercel.app",
   }),
 );
 // app.use((req, res, next) => {
