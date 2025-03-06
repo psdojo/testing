@@ -7,7 +7,7 @@
     "postinstall": "echo 'chrome is trying to install'",
     "build": "tsc",
     "start:dev": "npx tsx watch ./src/app.ts",
-    "start:staging": "npm run build && node ./build/app.js",
+    "start:staging": "npx @puppeteer/browsers install chrome@stable && npm run build && node ./build/app.js",
     "start:prod": "npm run build && node ./build/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
