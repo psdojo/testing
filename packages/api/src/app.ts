@@ -11,7 +11,11 @@ import { GridFSBucket } from "mongodb";
 //import { CustomConfig } from "./src/types/interfaces.ts";
 import * as chromeLauncher from "chrome-launcher";
 const app = express();
-const mongoUrl = "mongodb://localhost:27017";
+const mongoUrl =
+  process.env.NODE_ENV === "prod"
+    ? process.env.MONGO_URI_PROD
+    : process.env.MONGO_URI_DEV;
+console.log(`${process.env.NODE_ENV}`);
 const dbName = "webaudit";
 const collectionName = "performance";
 const MongoDBConfig = { mongoUrl, dbName, collectionName };
@@ -47,7 +51,7 @@ app.post("/", async (req: Request, res: Response) => {
   const report = await lighthouseService.runTest(url);
 
   console.log("chrome");
-  console.log(report);
+  //console.log(report);
 
   await mongoDB.connect();
   // console.log(mongoDB.client.db(dbName))
@@ -104,7 +108,7 @@ app.post("/", async (req: Request, res: Response) => {
   await mongoDB.close();
 
   // console.log(report)
-  // return report
+  return report;
   //fs.writeFileSync("lighthousereportresult.html", report.report, "utf8");
   //app.get("/report", (req, res) => {
   //  const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -118,9 +122,9 @@ app.post("/", async (req: Request, res: Response) => {
   //});
   // res.status(200).send(lighthousereportresult.html)
   // console.log(report)
-  res.status(200).json(report);
+  //res.status(200).json(report);
   // res.status(200).json({ message: 'audit completed successfully' })
-  // res.status(200).json(document)
+  //res.status(200).json(document);
 });
 app.listen(port, () => {
   console.log("server is running");
