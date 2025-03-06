@@ -1,8 +1,13 @@
 import * as chromeLauncher from "chrome-launcher";
 import lighthouse, { Config, RunnerResult } from "lighthouse";
+import fs from "fs";
 // import { Result } from 'lighthouse/types/lhr/audit-result'
 //import { CustomConfig } from '../types/interfaces.ts'
 
+const chromePath =
+  "/opt/render/project/src/packages/api/chrome/" +
+  fs.readdirSync("/opt/render/project/src/packages/api/chrome/").sort().pop() +
+  "/chrome-linux64/chrome";
 class ChromeLauncherService {
   private chromeConfig: chromeLauncher.Options;
   constructor(chromeConfig: chromeLauncher.Options) {
@@ -17,8 +22,8 @@ class ChromeLauncherService {
           "--headless",
           "--no-sandbox",
           "--remote-debugging-port=9222",
+          chromePath,
         ],
-        chromePath: "/opt/render/.cache/puppeteer/chrome/linux-<ARCH>/chrome",
       });
     } catch (error) {
       console.log(error);
