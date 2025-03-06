@@ -4,7 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "postinstall": "echo 'chrome is trying to install' && npx @puppeteer/browsers install chrome@stable",
+    "postinstall": "echo 'chrome is trying to install'",
     "build": "tsc",
     "start:dev": "npx tsx watch ./src/app.ts",
     "start:staging": "npm run build && node ./build/app.js",
@@ -14,7 +14,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "chrome-launcher": "^1.1.2",
     "cors": "^2.8.5",
@@ -28,5 +27,6 @@
     "@types/express": "^5.0.0",
     "nodemon": "^3.1.9",
     "ts-node": "^10.9.2"
-  }
+  },
+  "description": ""
 }
