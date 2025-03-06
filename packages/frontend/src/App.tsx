@@ -5,7 +5,7 @@ function App() {
   function handleSubmit(e) {
     e.preventDefault()
     const url = e.target.inputUrl.value
-    axios.post('http://localhost:3000/', { url }).then((response) => { console.log(response) }).catch((error) => { console.log(error) })
+    axios.post('localhost:port', { url }).then((response) => { console.log(response) }).catch((error) => { console.log(error) })
     console.log(url)
   }
 
