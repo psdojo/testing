@@ -4,6 +4,7 @@ import path from "path";
 import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   server: {
+    allowedHost: "testing-uneh.onrender.com",
     host: "0.0.0.0",
     port: process.env.PORT || 5173,
   },
