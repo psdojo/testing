@@ -20,12 +20,12 @@ class ChromeLauncherService {
           "--remote-debugging-port=9222",
         ],
         chromePath:
-          "/opt/render/project/src/packages/api/chrome/" +
-          fs
-            .readdirSync("/opt/render/project/src/packages/api/chrome/")
-            .sort()
-            .pop() +
-          "/chrome-linux64/chrome",
+          "/opt/render/project/src/packages/api/chrome/linux-134.0.6998.35/chrome-linux64/chrome",
+        //"/opt/render/project/src/packages/api/chrome/" +
+        //fs .readdirSync("/opt/render/project/src/packages/api/chrome/")
+        //  .sort()
+        //  .pop() +
+        //"/chrome-linux64/chrome",
       });
     } catch (error) {
       console.log(error);
