@@ -18,8 +18,7 @@ class ChromeLauncherService {
           "--no-sandbox",
           "--remote-debugging-port=9222",
         ],
-        chromePath:
-          "/home/a/a/new/packages/api/chrome/linux-132.0.6834.159/chrome-linux64/chrome",
+        chromePath: "/opt/render/.cache/puppeteer/chrome/linux-<ARCH>/chrome",
       });
     } catch (error) {
       console.log(error);

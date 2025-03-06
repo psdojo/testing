@@ -4,6 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "postinstall": "npx @puppeteer/browsers install chrome@stable",
     "build": "tsc",
     "start:dev": "npx tsx watch ./src/app.ts",
     "start:staging": "npm run build && node ./build/app.js",
