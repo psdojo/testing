@@ -7,8 +7,9 @@
     "postinstall": "echo 'chrome is trying to install'",
     "build": "tsc",
     "start:dev": "export $(grep -v '^#' .env.dev | xargs) && npx tsx watch ./src/app.ts",
-    "install": "echo ''",
-    "start:staging": "npm install && npx @puppeteer/browsers install chrome@stable && npm run build && node ./build/app.js",
+    "install": "",
+    "start:staging1": "npm install && npx @puppeteer/browsers install chrome@stable && npm run build && node ./build/app.js",
+    "start:staging": "node ./build/app.js",
     "start:prod": " npm run build && node ./build/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
