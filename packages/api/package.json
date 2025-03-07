@@ -6,9 +6,9 @@
   "scripts": {
     "postinstall": "echo 'chrome is trying to install'",
     "build": "tsc",
-    "start:dev": "export $(cat .env.dev | xargs ) && npx tsx watch ./src/app.ts",
-    "start:staging": " export $(cat .env.prod | xargs ) &&  npx @puppeteer/browsers install chrome@stable && npm run build && node ./build/app.js",
-    "start:prod": " export $(cat .env.prod | xargs ) &&  npm run build && node ./build/app.js",
+    "start:dev": "export $(grep -v '^#' .env.dev | xargs) && npx tsx watch ./src/app.ts",
+    "start:staging": " export $(grep -v '^#' .env.prod | xargs ) &&  npx @puppeteer/browsers install chrome@stable && npm run build && node ./build/app.js",
+    "start:prod": " export $(grep -v '^#' .env.prod | xargs) &&  npm run build && node ./build/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
