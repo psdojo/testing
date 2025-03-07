@@ -34,6 +34,9 @@ app.use(express.json());
 app.use(
   cors({
     origin: "https://testing-frontend-iota.vercel.app",
+    methods: "GET,POST,PUT,DELETE,OPTIONS", // Allow necessary methods
+    allowedHeaders: "Content-Type,Authorization", // Allow required headers
+    credentials: true, // Allow cookies if needed
   }),
 );
 // app.use((req, res, next) => {
