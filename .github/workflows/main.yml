@@ -1,34 +1,50 @@
-name: Deploy to Render
+name: Deploy Prebuilt Files to Render
 
 on:
   push:
     branches:
-      - main  # Change if your main branch has a different name
-  workflow_dispatch:  # Allows manual triggering from GitHub Actions
+      - main
+  workflow_dispatch:  # Fixed syntax issue here
+
+permissions:
+  contents: write  # Needed for pushing commits (without node_modules)
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set up Node.js
+      - name: Set up Node.js 22.12.0
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 22.12.0
+          cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci  # Ensures clean install without modifying package-lock.json
+      - name: Install dependencies (API only)
+        run: |
+          cd packages/api
+          npm install --omit=dev  # Install only production dependencies
 
-      - name: Build project
-        run: npm run build  # Ensure you have a "build" script in package.json
+      - name: Build TypeScript (API only)
+        run: |
+          cd packages/api
+          npm run build  # Generates `packages/api/build/`
 
-      - name: Archive build artifacts
-        run: tar -czf build.tar.gz build
+      - name: Copy dependencies into build folder (without committing)
+        run: |
+          mkdir -p packages/api/build/node_modules
+          cp -r packages/api/node_modules/* packages/api/build/node_modules/
+          cp packages/api/package.json packages/api/build/
 
       - name: Deploy to Render
+        env:
+          RENDER_SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }}
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
         run: |
           curl -X POST "https://api.render.com/v1/services/$RENDER_SERVICE_ID/deploys" \
                -H "Authorization: Bearer $RENDER_API_KEY" \
