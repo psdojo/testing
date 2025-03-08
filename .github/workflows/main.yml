@@ -6,7 +6,7 @@ on:
       - main
 
 permissions:
-  contents: write  # Allow GitHub Actions to push commits
+  contents: write  # Needed for pushing commits (without node_modules)
 
 jobs:
   build-and-deploy:
@@ -18,11 +18,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set up Git user
-        run: |
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-
       - name: Set up Node.js 22.12.0
         uses: actions/setup-node@v4
         with:
@@ -32,25 +27,19 @@ jobs:
       - name: Install dependencies (API only)
         run: |
           cd packages/api
-          npm install --production  # Only install needed packages
-          npx playwright install chromium  # Install Chromium for Puppeteer
+          npm install --omit=dev  # Install only production dependencies
 
       - name: Build TypeScript (API only)
         run: |
           cd packages/api
           npm run build  # Generates `packages/api/build/`
 
-      - name: Copy dependencies into build folder
+      - name: Copy dependencies into build folder (without committing)
         run: |
           cp -r packages/api/node_modules packages/api/build/node_modules
+          cp packages/api/package.json packages/api/build/package.json
 
-      - name: Commit & Push API build (if changes exist)
-        run: |
-          git add packages/api/build
-          git diff --staged --quiet || (git commit -m "Update API build" && git push origin main)
-
-      - name: Deploy to Render (only if new commit was pushed)
-        if: success()
+      - name: Deploy to Render
         env:
           RENDER_SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }}
           RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
