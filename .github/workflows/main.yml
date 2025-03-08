@@ -12,6 +12,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }} # Ensure we have push permissions
+
+      - name: Set up Git user
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -19,21 +26,20 @@ jobs:
           node-version: 18
           cache: 'npm'
 
-      - name: Install dependencies
+      - name: Install dependencies (API only)
         run: |
           cd packages/api
           npm install
 
-      - name: Build TypeScript
+      - name: Build TypeScript (API only)
         run: |
           cd packages/api
-          npm run build  # Generates the `build/` folder
+          npm run build  # Generates `packages/api/build/`
 
-      - name: Push changes
+      - name: Commit & Push API build (if changes exist)
         run: |
           git add packages/api/build
-          git commit -m "Add latest build files" || echo "No changes to commit"
-          git push
+          git diff --staged --quiet || (git commit -m "Update API build" && git push origin main)
 
       - name: Deploy to Render
         env:
