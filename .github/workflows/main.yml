@@ -4,41 +4,39 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch::
+  workflow_dispatch:  # 👈 Allows manual runs from GitHub UI
 
 permissions:
-  contents: write  # Needed for pushing commits (without node_modules)
+  contents: write
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set up Node.js 22.12.0
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22.12.0
           cache: 'npm'
 
-      - name: Install dependencies (API only)
+      - name: Install dependencies
         run: |
           cd packages/api
-          npm install --omit=dev  # Install only production dependencies
+          npm install --omit=dev
+          cp -R node_modules build/  # Copy node_modules to build/
 
-      - name: Build TypeScript (API only)
+      - name: Build API
         run: |
           cd packages/api
-          npm run build  # Generates `packages/api/build/`
+          npm run build
 
-      - name: Copy dependencies into build folder (without committing)
+      - name: Commit & Push Build
         run: |
-          cp -r packages/api/node_modules packages/api/build/node_modules
-          cp packages/api/package.json packages/api/build/package.json
+          git add packages/api/build
+          git diff --staged --quiet || (git commit -m "Update API build" && git push origin main)
 
       - name: Deploy to Render
         env:
