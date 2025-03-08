@@ -21,13 +21,13 @@ jobs:
 
       - name: Install dependencies
         run: |
-        cd packages/api
-        npm install
+          cd packages/api
+          npm install
 
       - name: Build TypeScript
         run: 
-        cd packages/api
-        npm run build  # Generates the `build/` folder
+          cd packages/api
+          npm run build  # Generates the `build/` folder
 
       - name: Push changes
         run: |
