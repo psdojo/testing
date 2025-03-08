@@ -6,7 +6,7 @@ on:
       - main
 
 permissions:
-  contents: write  # 👈 This grants GitHub Actions permission to push commits.
+  contents: write  # Allow GitHub Actions to push commits
 
 jobs:
   build-and-deploy:
@@ -32,19 +32,25 @@ jobs:
       - name: Install dependencies (API only)
         run: |
           cd packages/api
-          npm install
+          npm install --production  # Install only required dependencies
+          npx playwright install chromium  # Install Chromium for Puppeteer
 
       - name: Build TypeScript (API only)
         run: |
           cd packages/api
           npm run build  # Generates `packages/api/build/`
 
+      - name: Copy node_modules to build folder
+        run: |
+          cp -r packages/api/node_modules packages/api/build/node_modules
+
       - name: Commit & Push API build (if changes exist)
         run: |
           git add packages/api/build
           git diff --staged --quiet || (git commit -m "Update API build" && git push origin main)
 
-      - name: Deploy to Render
+      - name: Deploy to Render (only if new commit was pushed)
+        if: success()
         env:
           RENDER_SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }}
           RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
