@@ -1,6 +1,9 @@
 name: Deploy to Render
 
 on:
+  push:
+    branches:
+      - main  # Change if your main branch has a different name
   workflow_dispatch:  # Allows manual triggering from GitHub Actions
 
 jobs:
