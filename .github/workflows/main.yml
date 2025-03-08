@@ -4,17 +4,25 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:  # 👈 Allows manual runs from GitHub UI
+  workflow_dispatch:  # Allows manual deployment trigger
 
 permissions:
-  contents: write
+  contents: write  # Needed to push built files
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}  # Ensures write access
+
+      - name: Set up Git user
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -22,18 +30,21 @@ jobs:
           node-version: 22.12.0
           cache: 'npm'
 
-      - name: Install dependencies
+      - name: Install dependencies (without saving node_modules)
         run: |
           cd packages/api
-          npm install --omit=dev
-          cp -R node_modules build/  # Copy node_modules to build/
+          npm install --omit=dev  # Installs only production dependencies
 
       - name: Build API
         run: |
           cd packages/api
-          npm run build
+          npm run build  # Generates `packages/api/build/`
 
-      - name: Commit & Push Build
+      - name: Copy node_modules to build folder
+        run: |
+          cp -r packages/api/node_modules packages/api/build/
+
+      - name: Commit & Push Build Files
         run: |
           git add packages/api/build
           git diff --staged --quiet || (git commit -m "Update API build" && git push origin main)
@@ -48,3 +59,4 @@ jobs:
                -H "Accept: application/json" \
                -H "Content-Type: application/json" \
                -d '{}'
+              -d '{}'
