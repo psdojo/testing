@@ -16,14 +16,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}  # Ensure write access
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Git user
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
 
-      - name: Set up Node.js
+      - name: Set up Node.js 22.12.0
         uses: actions/setup-node@v4
         with:
           node-version: 22.12.0
@@ -32,7 +32,7 @@ jobs:
       - name: Install dependencies (API only)
         run: |
           cd packages/api
-          npm install --production  # Install only required dependencies
+          npm install --production  # Only install needed packages
           npx playwright install chromium  # Install Chromium for Puppeteer
 
       - name: Build TypeScript (API only)
@@ -40,7 +40,7 @@ jobs:
           cd packages/api
           npm run build  # Generates `packages/api/build/`
 
-      - name: Copy node_modules to build folder
+      - name: Copy dependencies into build folder
         run: |
           cp -r packages/api/node_modules packages/api/build/node_modules
 
