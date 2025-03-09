@@ -35,10 +35,6 @@ jobs:
           cd packages/api
           npm run build  # Generates `packages/api/build/`
 
-      - name: Copy prebuilt API files to build folder
-        run: |
-          cp -r packages/api/node_modules/* packages/api/build/node_modules/
-          cp packages/api/package.json packages/api/build/
 
       - name: Copy Google Chrome binary to build folder
         run: |
