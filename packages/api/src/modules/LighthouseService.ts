@@ -13,7 +13,7 @@ class ChromeLauncherService {
   async launchChrome() {
     // await chromeLauncher.launch(this.chromeConfig)
     try {
-      await chromeLauncher.launch({
+      const chrome = await chromeLauncher.launch({
         chromeFlags: [
           "--headless",
           "--no-sandbox",
@@ -21,13 +21,14 @@ class ChromeLauncherService {
         ],
         chromePath:
           //"/home/a/a/new/packages/api/chrome/linux-132.0.6834.159/chrome-linux64/chrome",
-          "/opt/render/project/src/packages/api/chrome/linux-134.0.6998.35/chrome-linux64/chrome",
+          "/opt/render/project/src/packages/api/build/chrome/google-chrome-stable",
         //"/opt/render/project/src/packages/api/chrome/" +
         //fs .readdirSync("/opt/render/project/src/packages/api/chrome/")
         //  .sort()
         //  .pop() +
         //"/chrome-linux64/chrome",
       });
+      console.log(`Chrome launched at: ${chrome.port}`);
     } catch (error) {
       console.log(error);
     }

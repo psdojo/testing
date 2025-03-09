@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:  # Fixed syntax issue here
+  workflow_dispatch:
 
 permissions:
   contents: write  # Needed for pushing commits (without node_modules)
@@ -25,21 +25,33 @@ jobs:
           node-version: 22.12.0
           cache: 'npm'
 
+      - name: Install Google Chrome (for ChromeLauncher)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+          google-chrome --version
+
       - name: Install dependencies (API only)
         run: |
           cd packages/api
           npm install --omit=dev  # Install only production dependencies
+          npm install chrome-launcher  # Install ChromeLauncher
 
       - name: Build TypeScript (API only)
         run: |
           cd packages/api
           npm run build  # Generates `packages/api/build/`
 
-      - name: Copy dependencies into build folder (without committing)
+      - name: Copy dependencies and Chrome into build folder
         run: |
           mkdir -p packages/api/build/node_modules
           cp -r packages/api/node_modules/* packages/api/build/node_modules/
           cp packages/api/package.json packages/api/build/
+
+          # Copy Google Chrome binary to build folder
+          mkdir -p packages/api/build/chrome
+          cp -r /usr/bin/google-chrome-stable packages/api/build/chrome/
+          cp -r /usr/lib/google-chrome packages/api/build/chrome/
 
       - name: Deploy to Render
         env:
