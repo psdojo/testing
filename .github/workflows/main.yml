@@ -1,64 +1,55 @@
-name: Deploy Prebuilt Files to Render
+name: CI and Deploy to Render
 
 on:
+  pull_request:
   push:
-    branches:
-      - main
-  workflow_dispatch:
-
-permissions:
-  contents: write  # Needed for pushing commits (without node_modules)
+    branches: [main]
 
 jobs:
-  build-and-deploy:
+  ci:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Set up Node.js 22.12.0
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22.12.0
-          cache: 'npm'
+      - uses: actions/checkout@v3
 
       - name: Install dependencies (API only)
         run: |
           cd packages/api
           npm install --omit=dev  # Install only production dependencies
 
-      - name: Install Google Chrome for Puppeteer
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y google-chrome-stable
-
       - name: Build TypeScript (API only)
         run: |
           cd packages/api
           npm run build  # Generates `packages/api/build/`
 
-      - name: Copy dependencies into build folder (without committing)
+      - name: Install Google Chrome for Puppeteer
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+
+      - name: Copy dependencies and Chrome binary into build folder
         run: |
           mkdir -p packages/api/build/node_modules
           cp -r packages/api/node_modules/* packages/api/build/node_modules/
           cp packages/api/package.json packages/api/build/
-
-      - name: Copy Google Chrome binary to build folder
-        run: |
+          
           mkdir -p packages/api/build/chrome
           cp -r /usr/bin/google-chrome-stable packages/api/build/chrome/
           cp -r /opt/google/chrome packages/api/build/chrome/ || true  # Ignore if not found
 
-      - name: Deploy to Render
-        env:
-          RENDER_SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }}
-          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+      - name: Commit and push prebuilt files to main branch
         run: |
-          curl -X POST "https://api.render.com/v1/services/$RENDER_SERVICE_ID/deploys" \
-               -H "Authorization: Bearer $RENDER_API_KEY" \
-               -H "Accept: application/json" \
-               -H "Content-Type: application/json" \
-               --data '{}'
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          
+          git checkout main
+          git add packages/api/build/
+          git commit -m "Prebuilt API files for Render deployment"
+          git push origin main --force
+
+      - name: Deploy to Render
+        if: github.ref == 'refs/heads/main'  # Only run this on `main`
+        env:
+          deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        run: |
+          curl "$deploy_url"  # Trigger Render deploy using the secret URL
