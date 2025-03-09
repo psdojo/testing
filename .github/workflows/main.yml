@@ -25,17 +25,15 @@ jobs:
           node-version: 22.12.0
           cache: 'npm'
 
-      - name: Install Google Chrome (for ChromeLauncher)
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y google-chrome-stable
-          google-chrome --version
-
       - name: Install dependencies (API only)
         run: |
           cd packages/api
           npm install --omit=dev  # Install only production dependencies
-          npm install chrome-launcher  # Install ChromeLauncher
+
+      - name: Install Google Chrome for Puppeteer
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
 
       - name: Build TypeScript (API only)
         run: |
@@ -50,8 +48,7 @@ jobs:
 
           # Copy Google Chrome binary to build folder
           mkdir -p packages/api/build/chrome
-          cp -r /usr/bin/google-chrome-stable packages/api/build/chrome/
-          cp -r /usr/lib/google-chrome packages/api/build/chrome/
+          cp /usr/bin/google-chrome-stable packages/api/build/chrome/
 
       - name: Deploy to Render
         env:
@@ -62,4 +59,5 @@ jobs:
                -H "Authorization: Bearer $RENDER_API_KEY" \
                -H "Accept: application/json" \
                -H "Content-Type: application/json" \
-               --data '{}'
+               -d '{}'
+              --data '{}'
