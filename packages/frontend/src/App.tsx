@@ -1,4 +1,6 @@
+a
 import { useState, useEffect } from "react";
+
 //import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card.js";
 //import "./../dist/script.js"
 import "./tracing.js"
