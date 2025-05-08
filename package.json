@@ -1,9 +1,6 @@
 {
   "name": "testing",
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
   "scripts": {
     "start:api": "npm run --workspace=api start:dev",
     "start:staging:api": "npm --workspace=api start:staging ",
