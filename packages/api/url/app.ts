@@ -8,8 +8,9 @@ app.post("/", async (req, res) => {
     const url = await validateUserInputUrl(inputUrl);
     console.log(url);
     res.json({ url });
-  } catch (error) {
-    res.status(400).json({ message: "Invalid input" });
+  } catch (error: any) {
+    // res.status(400).json({ message: "Invalid input" });
+    res.status(400).json({ message: error.message || "Invalid input" });
   }
 });
 app.listen(3000);

@@ -31,14 +31,14 @@ export async function validateUserInputUrl(input: string): Promise<URL> {
   }
 
   // Step 3: Check if IP is public and not dangerous
-  // try {
-  //   const ip = ipaddr.parse(address);
-  //   if (ip.range() !== "unicast") {
-  //     throw new Error(`Blocked unsafe IP address: ${address}`);
-  //   }
-  // } catch {
-  //   throw new Error(`Invalid or unsafe IP address: ${address}`);
-  // }
+  try {
+    const ip = ipaddr.parse(address);
+    if (ip.range() !== "unicast") {
+      throw new Error(`Blocked unsafe IP address: ${address}`);
+    }
+  } catch {
+    throw new Error(`Invalid or unsafe IP address: ${address}`);
+  }
 
   // ✅ Passed all checks
   return url;
