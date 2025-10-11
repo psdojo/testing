@@ -3,9 +3,9 @@
     "target": "ES2022",
     "module": "NodeNext",
     "outDir": "./build",
-    "rootDir": "./src",
+    "rootDir": "./",
     "moduleResolution":"NodeNext",
-    //"allowImportingTsExtensions": true,
+    "allowImportingTsExtensions": true,
     //"noEmit": true
   }
 }

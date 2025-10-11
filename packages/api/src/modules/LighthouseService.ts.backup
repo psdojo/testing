@@ -3,9 +3,10 @@ import lighthouse, { Config, RunnerResult } from "lighthouse";
 import { LighthouseServiceConfig } from "../types/interfaces.js";
 // import puppeteer from "puppeteer";
 class LighthouseService {
-  private client: any;
-  constructor(client: any) {
-    this.client = client;
+  private url: string;
+
+  constructor(url: string) {
+    this.url = url;
   }
   async runTest(url: string): Promise<RunnerResult> {
     try {
@@ -14,13 +15,13 @@ class LighthouseService {
       //   args: ["--remote-debugging-port=9222"],
       //   defaultViewport: null,
       // });
-      // const chrome = await chromeLauncher.launch({
-      //   chromeFlags: ["--headless"],
-      //   chromePath: "/home/a/.nix-profile/bin/google-chrome-stable",
-      // });
+      const chrome = await chromeLauncher.launch({
+        chromeFlags: ["--headless"],
+        chromePath: "/home/a/.nix-profile/bin/google-chrome-stable",
+      });
       // const browser = await puppeteer.launch({ headless: true });
       return await lighthouse(url, {
-        port: this.client.port,
+        port: chrome.port,
         output: "html",
         logLevel: "info",
       });

@@ -1,4 +1,5 @@
 import { Config } from "lighthouse";
+import { Browser } from "puppeteer-core";
 export interface MongoDBConfig {
   mongoUrl: string;
   dbName: string;
@@ -10,10 +11,12 @@ export interface MongoDBClient {
   connect(): Promise<void>;
 }
 
-export interface LighthouseServiceConfig {
+export interface LighthouseServiceConfig extends Config {
   extends?: string;
-  output?: string;
+  //output?: string | string[];
   settings?: {
     onlyAudits?: string[];
+    onlyCategories?: string[];
   };
+  browser: Browser;
 }

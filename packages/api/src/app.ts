@@ -1,134 +1,163 @@
 const port = process.env.PORT || 3000;
-import fs from "fs";
-import path from "path";
+import CDP from "chrome-remote-interface";
+import dns from "dns/promises";
+import ipaddr from "ipaddr.js";
 import { fileURLToPath } from "url";
 import express, { Request, Response } from "express";
 import cors from "cors";
-import LighthouseService from "./modules/LighthouseService.js";
-import { ChromeLauncherService } from "./modules/LighthouseService.js";
-import MongoDB from "./modules/mongodb.js";
-import { GridFSBucket } from "mongodb";
-//import { CustomConfig } from "./src/types/interfaces.ts";
-import * as chromeLauncher from "chrome-launcher";
+import LighthouseService from "./modules/LighthouseService.ts";
+import PageSpeedInsightsProvider from "./modules/PageSpeedInsights.js";
+import * as ChromeLauncher from "chrome-launcher";
+import lighthouse from "lighthouse";
 
+interface LighthouseRequest {
+  url: string
+}
 const app = express();
-const mongoUrl =
-  process.env.NODE_ENV === "prod"
-    ? process.env.MONGO_URI_PROD
-    : process.env.MONGO_URI_DEV;
-console.log(`${process.env.NODE_ENV}`);
-const dbName = "webaudit";
-const collectionName = "performance";
-const MongoDBConfig = { mongoUrl, dbName, collectionName };
-const mongoDB: MongoDB = new MongoDB(MongoDBConfig);
-// const LighthouseConfig: CustomConfig = { port }
-// const chromeConfig: chromeLauncher.Options = {
-//   chromeFlags: ['--headless', '--no-sandbox'],
-//   chromePath: '/home/a/a/new/api/chrome/linux-132.0.6834.159/chrome-linux64/chrome',
-// }
-// const chromeLauncherService = new ChromeLauncherService(chromeConfig)
-const chromeLauncherService = new ChromeLauncherService(null);
-const lighthouseService = new LighthouseService({});
-
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://testing-frontend-iota.vercel.app",
+    origin: [
+      "https://testing-frontend-iota.vercel.app",
+      "http://localhost:5173",
+    ],
     methods: "GET,POST,PUT,DELETE,OPTIONS", // Allow necessary methods
-    allowedHeaders: "Content-Type,Authorization", // Allow required headers
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+      "Accept",
+      "traceparent",
+      "tracestate",
+      "b3",
+      "x-b3-traceid",
+      "x-b3-spanid",
+      "x-b3-parentspanid",
+      "x-b3-sampled",
+      "x-b3-flags",
+      "x-ot-span-context",
+    ],
     credentials: true, // Allow cookies if needed
   }),
 );
-// app.use((req, res, next) => {
-//   res.header('Access-Control-Allow-Origin', 'http://localhost:5173');
-//   res.header('Access-Control-Allow-Headers, 'Origin, X - Requested - With, Content - Type, Accept');
-//   next();
-// })
-app.post("/", async (req: Request, res: Response): Promise<void> => {
-  //how does this code works
-  //
+let chrome: any;
+let client: any;
+let Target: any;
+let targetId: any;
 
-  const { url }: { url: string } = req.body;
-  // console.log(url)
-  const chrome = await chromeLauncherService.launchChrome();
-  // console.log('chrome launched', chrome)
-  const report = await lighthouseService.runTest(url);
+let lighthouseService: any;
+try {
+  chrome = await ChromeLauncher.launch({
+    chromeFlags: ["--headless"],
+    chromePath: "/opt/chrome/linux-131.0.6778.85/chrome-linux64/chrome",
+  });
+  client = await CDP({ port: chrome.port });
+  console.log("chrome and cdp connected!");
+  // lighthouseService = new LighthouseService(client);
+} catch (error) {
+  console.log("Failed to launch chrome or connect CDP:", error);
+  process.exit(1);
+}
 
-  console.log("chrome");
-  //console.log(report);
+export const processUrl = (
+  inputUrl: string,
+): string | "LOCAL_IP" | "INVALID_URL" => {
+  //1. Garbage check
+  if (!inputUrl || typeof inputUrl !== "string" || !inputUrl.trim()) {
+    return "INVALID_URL";
+  }
 
-  await mongoDB.connect();
-  // console.log(mongoDB.client.db(dbName))
-  console.log("connected");
+  let sanitizedInputUrl = inputUrl.trim();
 
-  // await mongoDB.createTimeseriesCollection(collectionName, {
-  //   timeseries: {
-  //     timeField: ' timestamp',
-  //     metaField: 'metadata',
-  //     granularity: 'minutes'
-  //   }
-  // })
+  //Protocol check
 
-  const bucket = new GridFSBucket(mongoDB.client.db(dbName));
-  const buffer = Buffer.from(JSON.stringify(report));
-  const uploadStream = bucket.openUploadStream("json");
-  // `report-${new Date().toISOString()}.json`
-  //
-  // const uploadStream = bucket.openUploadStream(`report-${new Date().toISOString()}.json`);
-  //
-  //
-  //
-  //
-  // uploadStream.write(buffer)
-  // uploadStream.end()
-  await new Promise((resolve, reject) => {
-    uploadStream.write(buffer, (err) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve("success");
+  const lower = sanitizedInputUrl.toLowerCase();
+
+  if (
+    lower.includes("://") &&
+    !lower.startsWith("http://") &&
+    !lower.startsWith("https://")
+  ) {
+    return "INVALID_URL";
+  }
+
+  if (!lower.startsWith("http://") && !lower.startsWith("https://")) {
+    sanitizedInputUrl = `https://${sanitizedInputUrl}`;
+  }
+
+  try {
+    const url = new URL(sanitizedInputUrl);
+    url.protocol = "https:";
+    const hostname = url.hostname;
+
+    if (
+      hostname === "localhost" ||
+      hostname === "::1" ||
+      /^127\./.test(hostname) ||
+      /^10\./.test(hostname) ||
+      /^192\.168\./.test(hostname) ||
+      /^172\.(1[6-9]|2\d|3[0-1])\./.test(hostname)
+    ) {
+      return "LOCAL_IP";
+    }
+
+    if (ipaddr.isValid(hostname)) {
+      const ip = ipaddr.parse(hostname);
+
+      if (ip.range() !== "unicast") {
+        return "LOCAL_IP";
       }
-    });
+    }
+    return url.href;
+  } catch {
+    return "INVALID_URL";
+  }
+};
+
+app.post(
+  "/",
+  async (
+    req: Request<{}, {}, LighthouseRequest>,
+    res: Response,
+  ): Promise<void> => {
+    const { inputUrl } = req.body;
+    const url = processUrl(inputUrl);
+    try {
+      ({ targetId } = await client.Target.createTarget({
+        url: "about:blank",
+      }));
+      const targetClient = await CDP({ target: targetId, port: chrome.port });
+
+      const scopedService = new LighthouseService(targetClient);
+      const report = await scopedService.runTest(url);
+      res.status(200).json(report.report);
+
+      await client.Target.closeTarget({ targetId });
+    } catch (err) {
+      console.error("Lighthouse error:", err);
+      res.status(500).json({ error: "Failed to run Lighthouse" });
+    } finally {
+      if (targetId) {
+        await client.Target.closeTarget({ targetId });
+        console.log(`Closed tab ${targetId}`);
+      }
+    }
+  },
+);
+//    //1. Garbage check
+//
+//    const { url } = req.body;
+//
+//    console.log(url);
+//    let address: string;
+//
+//  },
+//);
+
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(err.status || 500).json({
+    message: err.message || "something went wrong",
   });
-
-  uploadStream.end();
-
-  // Wait for the upload to complete
-  await new Promise((resolve, reject) => {
-    uploadStream.on("finish", resolve);
-    uploadStream.on("error", reject);
-  });
-  //
-  //
-  const document = {
-    timestamp: new Date(),
-    metadata: {
-      url,
-      reportId: uploadStream.id,
-    },
-  };
-
-  await mongoDB.insertDocument(collectionName, document);
-  await mongoDB.close();
-
-  // console.log(report)
-  //return report;
-  //fs.writeFileSync("lighthousereportresult.html", report.report, "utf8");
-  //app.get("/report", (req, res) => {
-  //  const __dirname = path.dirname(fileURLToPath(import.meta.url));
-  //  const filePath = path.join(__dirname, "lighthousereportresult.html");
-  //
-  //  res.status(200).sendFile(filePath, (err) => {
-  //    if (err) {
-  //      throw err;
-  //    }
-  //  });
-  //});
-  // res.status(200).send(lighthousereportresult.html)
-  // console.log(report)
-  res.status(200).json(report);
-  // res.status(200).json({ message: 'audit completed successfully' })
-  //res.status(200).json(document);
 });
 app.listen(port, () => {
   console.log("server is running");
