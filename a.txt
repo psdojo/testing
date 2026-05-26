@@ -1,1 +1,0 @@
-chrome@134.0.6998.35 /opt/render/project/src/packages/api/chrome/linux-134.0.6998.35/chrome-linux64/chrome
