@@ -1,0 +1,247 @@
+================================================================================
+                            PRANJAL SHARMA
+                         Full Stack Developer
+                      Jaipur, India | +91-XXXXXXXXXX
+              GitHub: github.com/psdojo | LinkedIn: [Your Profile]
+================================================================================
+
+PROFESSIONAL SUMMARY
+================================================================================
+Full Stack Developer and UI/UX Designer with 4+ years of experience specializing
+in web performance optimization, e-commerce solutions, and scalable web
+applications. Currently employed at Orbe Lashes as a Frontend Developer and
+Designer. Proven expertise in React, TypeScript, Next.js, and Shopify development.
+Passionate about writing clean, maintainable code and delivering high-quality
+results. Strong track record of optimizing website performance and improving user
+experience.
+
+KEY HIGHLIGHTS
+================================================================================
+• 4+ years of full-stack web development experience
+• 166+ hours of professional development work
+• Expert in React, TypeScript, and modern JavaScript frameworks
+• Shopify store optimization and custom theme development
+• Performance optimization (Core Web Vitals, Lighthouse)
+• DevOps infrastructure setup and maintenance
+• Strong debugging and problem-solving skills
+• Fluent in English and Hindi (Native/Bilingual)
+
+CORE COMPETENCIES
+================================================================================
+
+Frontend Technologies
+  • HTML5 (Semantic HTML, Web Components)
+  • CSS3 (Flexbox, Grid, Custom Properties, Animations)
+  • JavaScript (ES6+, ESNext features)
+  • TypeScript
+
+CSS Frameworks & Preprocessors
+  • SASS/SCSS
+  • Bootstrap
+  • Tailwind CSS
+
+JavaScript Frameworks & Libraries
+  • React.js
+  • Preact
+  • Vue.js
+  • React Native
+
+Meta-Frameworks & Static Site Generators
+  • Next.js (React)
+  • Astro
+
+State Management
+  • Redux (with Redux Toolkit)
+
+Build Tools & Module Bundlers
+  • Webpack
+  • Babel
+  • Vite
+
+Testing & Quality Assurance
+  • Jest
+  • Cypress
+  • Selenium
+
+Performance Optimization
+  • Lighthouse
+  • Web Vitals
+  • Progressive Web Apps (PWA)
+  • Code Splitting
+  • Lazy Loading
+  • Service Workers
+
+API Integration & Data Fetching
+  • RESTful APIs
+  • GraphQL (Apollo Client, Relay, urql)
+  • WebSockets
+  • Server-Sent Events (SSE)
+  • Axios
+  • Fetch API
+
+Animation & Graphics
+  • GSAP (GreenSock)
+  • Three.js
+  • D3.js
+  • Chart.js
+  • Anime.js
+
+Internationalization & Localization
+  • i18next
+
+Accessibility (a11y)
+  • ARIA Standards
+
+Backend & DevOps
+  • Node.js
+  • Docker
+  • AWS
+  • Linux Server Management
+  • Cron Jobs
+  • Python Scripting
+
+E-Commerce & CMS
+  • Shopify Development (Liquid, JavaScript)
+  • WooCommerce
+  • WordPress Development
+  • Headless Commerce Solutions
+  • Contentful, Strapi
+
+Version Control & Collaboration
+  • Git
+  • GitHub
+
+PROFESSIONAL EXPERIENCE
+================================================================================
+
+FRONTEND DEVELOPER & DESIGNER
+Orbe Lashes | July 2022 - Present
+London, UK (Remote) | Full-time
+
+• Develop and maintain WordPress websites and Shopify stores for an eyelash
+  products company
+• Specialize in Shopify theme customization and e-commerce optimization
+• Focus on conversion rate optimization (CRO) and user experience improvements
+• Implement performance optimizations resulting in faster load times and better
+  user engagement
+• Write maintainable, well-documented code following best practices
+• Collaborate with stakeholders to understand business requirements and deliver
+  high-quality solutions
+• Conduct store audits identifying performance bottlenecks and technical issues
+
+Key Achievements:
+  - Orbe Lashes Shopify UX Redesign & Performance Improvements (Portfolio Project)
+  - Optimized store performance using Core Web Vitals and Lighthouse metrics
+  - Implemented custom Shopify features and integrations
+  - Improved site speed and conversion rates through strategic optimizations
+
+DEVOPS ADMINISTRATOR & FREELANCER
+Freelance | July 2024 - Present
+Remote
+
+• Set up and maintain cloud infrastructure and services for various web
+  applications and scripts
+• Manage servers and deployment pipelines for multiple companies including Orbe
+  Lashes and Ashton Barclays
+• Deploy and configure Python scripts for automated data fetching and processing
+• Configure cron jobs for scheduled task execution
+• Maintain Linux servers and manage cloud resources
+• Provide technical support and troubleshooting
+
+Key Projects:
+  - Python script deployment for automated data collection
+  - Website to spreadsheet data automation with scheduled execution
+  - Cloud infrastructure setup for multiple SaaS applications
+  - Server monitoring and maintenance
+
+FULL STACK DEVELOPER (FREELANCE)
+Upwork | 2022 - Present
+Remote
+
+Current Project: CSS HTML Expert with Good Design Experience
+Duration: July 2022 - Present
+Rate: $3.00/hr
+Total Hours: 166 hours
+Total Earnings: $498.50+
+
+• Deliver production-ready web applications that are secure, robust, and scalable
+• Provide full-stack web development services covering frontend, backend, and
+  infrastructure
+• Work on custom web development projects and browser extensions
+• Implement responsive design and cross-browser compatibility
+• Assist with website redesigns and performance optimization
+
+EDUCATION & CERTIFICATIONS
+================================================================================
+
+BACHELOR OF SCIENCE (BS)
+Suresh Gyan Vihar University | 2019 - 2021
+Major: Physics with Mathematics & Computer Science
+
+CISCO CYBERSECURITY CERTIFICATION
+Cisco Learning Network | Issued October 2024
+Certifications:
+  • Introduction to Cybersecurity
+  • Threat Detection
+  • System Security
+  • Cybersecurity Management
+
+VERIFICATIONS & CREDENTIALS
+================================================================================
+• ID Verification: Verified
+• Military Veteran: Verified
+• GitHub Account: Connected (Since 2020, 10 Connects)
+• StackOverflow: Active Profile
+• Upwork Verified Freelancer
+
+TECHNICAL SKILLS SUMMARY
+================================================================================
+
+Repository Statistics:
+  • Repository: psdojo/testing (ID: 939684105)
+  • Language Composition:
+    - TypeScript: 57.8%
+    - JavaScript: 29.2%
+    - CSS: 11.0%
+    - Dockerfile: 1.1%
+    - HTML: 0.9%
+
+Languages & Frameworks:
+  • TypeScript, JavaScript (ES6+), HTML5, CSS3, SCSS, SQL
+  • React, Next.js, Vue.js, Preact, React Native
+  • Node.js, Express.js, GraphQL, REST APIs
+  • WordPress, Shopify, WooCommerce, Astro
+
+Tools & Platforms:
+  • VS Code, Git, Docker, Webpack, Babel, Vite
+  • AWS, Linux, Nginx, Apache
+  • Jest, Cypress, Selenium, Lighthouse
+  • Figma, Adobe Photoshop, Mockup Tools
+
+SOFT SKILLS
+================================================================================
+• Strong problem-solving abilities
+• Excellent communication and collaboration skills
+• Adaptability to new technologies and frameworks
+• Attention to detail and quality assurance
+• Project management and deadline-driven delivery
+• Client relationship management
+• Continuous learning and professional development
+• Transparency and accountability in work
+
+AVAILABILITY & WORK PREFERENCES
+================================================================================
+• Availability: More than 30 hours per week
+• Open to: Contract to hire positions
+• Work Type: Remote freelance, full-time, or contract roles
+• Specializations: Full-stack development, Shopify optimization, performance
+  tuning, web design, and DevOps infrastructure
+
+LANGUAGES
+================================================================================
+• English: Fluent
+• Hindi: Native or Bilingual
+
+================================================================================
+                           END OF RESUME
+================================================================================
