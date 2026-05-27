@@ -171,6 +171,47 @@ Total Earnings: $498.50+
 • Implement responsive design and cross-browser compatibility
 • Assist with website redesigns and performance optimization
 
+NOTABLE PROJECTS & PORTFOLIO
+================================================================================
+
+PROJECT: psdojo/testing
+Repository ID: 939684105
+GitHub: https://github.com/psdojo/testing
+
+Language Composition:
+  • TypeScript: 57.8% (Primary Language)
+  • JavaScript: 29.2%
+  • CSS: 11.0%
+  • Dockerfile: 1.1%
+  • HTML: 0.9%
+
+Project Overview:
+This is a comprehensive full-stack testing and development repository showcasing
+modern web development practices and architecture patterns. The project demonstrates
+proficiency in:
+
+  • TypeScript-first development approach
+  • Modern build tools and configuration
+  • Docker containerization for deployment
+  • Responsive design and styling
+  • Testing frameworks and quality assurance
+  • Clean code practices and maintainability
+
+Key Features:
+  - Strong TypeScript implementation (57.8% of codebase)
+  - Comprehensive JavaScript utilities and components
+  - Styled with modern CSS techniques
+  - Containerized with Docker for scalability
+  - Semantic HTML structure
+  - Production-ready code quality
+
+Use Cases Demonstrated:
+  • Full-stack application development
+  • Testing infrastructure setup
+  • DevOps and containerization
+  • Performance optimization
+  • Code organization and best practices
+
 EDUCATION & CERTIFICATIONS
 ================================================================================
 
@@ -197,26 +238,31 @@ VERIFICATIONS & CREDENTIALS
 TECHNICAL SKILLS SUMMARY
 ================================================================================
 
-Repository Statistics:
-  • Repository: psdojo/testing (ID: 939684105)
-  • Language Composition:
-    - TypeScript: 57.8%
-    - JavaScript: 29.2%
-    - CSS: 11.0%
-    - Dockerfile: 1.1%
-    - HTML: 0.9%
+Primary Languages:
+  • TypeScript (57.8% in main project)
+  • JavaScript (29.2% in main project)
+  • HTML5
+  • CSS3/SCSS
+  • SQL
+  • Python
 
-Languages & Frameworks:
-  • TypeScript, JavaScript (ES6+), HTML5, CSS3, SCSS, SQL
+Frameworks & Libraries:
   • React, Next.js, Vue.js, Preact, React Native
-  • Node.js, Express.js, GraphQL, REST APIs
-  • WordPress, Shopify, WooCommerce, Astro
+  • Node.js, Express.js
+  • GraphQL, REST APIs
 
 Tools & Platforms:
-  • VS Code, Git, Docker, Webpack, Babel, Vite
-  • AWS, Linux, Nginx, Apache
+  • Docker, AWS, Linux
+  • Git, GitHub
+  • Webpack, Babel, Vite
+  • VS Code, Figma, Adobe Photoshop
   • Jest, Cypress, Selenium, Lighthouse
-  • Figma, Adobe Photoshop, Mockup Tools
+
+Testing & Quality:
+  • Unit Testing with Jest
+  • E2E Testing with Cypress
+  • Performance Auditing with Lighthouse
+  • Cross-browser Testing with Selenium
 
 SOFT SKILLS
 ================================================================================
@@ -235,7 +281,7 @@ AVAILABILITY & WORK PREFERENCES
 • Open to: Contract to hire positions
 • Work Type: Remote freelance, full-time, or contract roles
 • Specializations: Full-stack development, Shopify optimization, performance
-  tuning, web design, and DevOps infrastructure
+  tuning, web design, DevOps infrastructure, and testing automation
 
 LANGUAGES
 ================================================================================
